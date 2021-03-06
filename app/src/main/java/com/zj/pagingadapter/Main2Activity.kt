@@ -4,15 +4,21 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.zj.pagingadapter.adapter.Demo2Adapter
 import com.zj.pagingadapter.adapter.DemoAdapter
+import com.zj.pagingadapter.adapter.PagingWrapAdapter
+import com.zj.pagingadapter.data.NewsBean
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class Main2Activity : AppCompatActivity() {
     private val viewModel: MyViewModel by viewModels()
     private val mAdapter by lazy {
-        DemoAdapter()
+        val readAdapter = Demo2Adapter()
+        PagingWrapAdapter<NewsBean.StoriesBean, Demo2Adapter.ViewHolder>(readAdapter) {
+            readAdapter.setDataList(it)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
