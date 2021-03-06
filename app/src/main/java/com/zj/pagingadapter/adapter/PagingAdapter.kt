@@ -1,5 +1,6 @@
 package com.zj.pagingadapter.adapter
 
+import android.util.Log
 import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.AdapterListUpdateCallback
@@ -46,11 +47,20 @@ class PagingAdapter:DemoAdapter() {
     }
 
      suspend fun submitList(pagingData: PagingData<NewsBean.StoriesBean>){
+         Log.i("tiaoshi","submit list")
         differ.submitData(pagingData)
-        setDataList(differ.snapshot().items)
+         Log.i("tiaoshi","differItems:"+differ.snapshot().items.size)
+//        setDataList(differ.snapshot().items)
+    }
+
+    override fun getItem(position: Int): NewsBean.StoriesBean {
+        Log.i("tiaoshi","here:"+position)
+        return differ.getItem(position)!!
     }
 
     override fun getItemCount(): Int {
-        return differ.itemCount
+        val size = differ.itemCount
+        Log.i("tiaoshi","getItemCount:"+size)
+        return size
     }
 }

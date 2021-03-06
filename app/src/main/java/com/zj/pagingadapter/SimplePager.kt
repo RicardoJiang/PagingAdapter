@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
  */
 class SimplePager<K : Any, V : Any>(
     private val scope: CoroutineScope,
-    private val pageSize: Int = 20,
+    private val pageSize: Int = 2,
     private val initialLoadSize: Int = pageSize,
     private val prefetchDistance: Int = pageSize,
     private val maxSize: Int = PagingConfig.MAX_SIZE_UNBOUNDED,
