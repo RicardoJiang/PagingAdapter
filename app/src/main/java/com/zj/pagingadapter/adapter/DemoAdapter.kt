@@ -23,14 +23,10 @@ open class DemoAdapter:RecyclerView.Adapter<DemoAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.run {
-            val data =getItem(position)
+            val data = mDataList[position]
             tv_title.text = data.title
             Glide.with(context).load(data.images?.get(0)).into(iv_cover)
         }
-    }
-
-    open fun getItem(position: Int):NewsBean.StoriesBean{
-        return mDataList[position]
     }
 
     override fun getItemCount(): Int {

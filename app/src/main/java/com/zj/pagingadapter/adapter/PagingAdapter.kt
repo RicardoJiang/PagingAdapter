@@ -1,16 +1,16 @@
 package com.zj.pagingadapter.adapter
 
-import android.util.Log
 import androidx.paging.AsyncPagingDataDiffer
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.AdapterListUpdateCallback
 import androidx.recyclerview.widget.DiffUtil
 import com.zj.pagingadapter.data.NewsBean
 import kotlinx.coroutines.Dispatchers
 
-class PagingAdapter:DemoAdapter() {
+class PagingAdapter : DemoAdapter() {
     private val differ = AsyncPagingDataDiffer(
-        diffCallback =itemCallback<NewsBean.StoriesBean>(
+        diffCallback = itemCallback<NewsBean.StoriesBean>(
             areItemsTheSame = { old, new ->
                 old.areItemsTheSame(new)
             },
@@ -46,21 +46,22 @@ class PagingAdapter:DemoAdapter() {
         }
     }
 
-     suspend fun submitList(pagingData: PagingData<NewsBean.StoriesBean>){
-         Log.i("tiaoshi","submit list")
+    init {
+        differ.addLoadStateListener {
+            if (it.append is LoadState.NotLoading) {
+                val items = differ.snapshot().items
+                setDataList(items)
+            }
+        }
+    }
+
+    suspend fun submitList(pagingData: PagingData<NewsBean.StoriesBean>) {
         differ.submitData(pagingData)
-         Log.i("tiaoshi","differItems:"+differ.snapshot().items.size)
-//        setDataList(differ.snapshot().items)
     }
 
-    override fun getItem(position: Int): NewsBean.StoriesBean {
-        Log.i("tiaoshi","here:"+position)
-        return differ.getItem(position)!!
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        super.onBindViewHolder(holder, position)
+        differ.getItem(position)
     }
 
-    override fun getItemCount(): Int {
-        val size = differ.itemCount
-        Log.i("tiaoshi","getItemCount:"+size)
-        return size
-    }
 }
