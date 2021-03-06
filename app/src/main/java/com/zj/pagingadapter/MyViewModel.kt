@@ -7,7 +7,7 @@ import cn.leo.paging_adapter.net.http.OkHttp3Creator
 import cn.leo.paging_adapter.net.http.ServiceCreator
 import cn.leo.paging_adapter.net.interceptor.LoggerInterceptor
 import com.zj.pagingadapter.api.Apis
-import com.zj.pagingadapter.data.DifferData
+import com.zj.pagingadapter.data.NewsBean
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,7 +34,7 @@ class MyViewModel : ViewModel() {
         .format(mDate.time)
         .toLong()
 
-    val pager = SimplePager<Long, DifferData>(
+    val pager = SimplePager<Long, NewsBean.StoriesBean>(
         viewModelScope,
         enablePlaceholders = true
     ) {
@@ -43,7 +43,7 @@ class MyViewModel : ViewModel() {
             //从网络获取数据
             val data = api.getNewsAsync(date)
             //添加title
-            val list: MutableList<DifferData> = data.stories.toMutableList()
+            val list: MutableList<NewsBean.StoriesBean> = data.stories.toMutableList()
             //返回数据
             PagingSource.LoadResult.Page(
                 list,
