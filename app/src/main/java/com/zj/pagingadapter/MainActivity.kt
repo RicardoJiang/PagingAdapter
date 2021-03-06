@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private val viewModel:MyViewModel by viewModels()
     private val mAdapter by lazy {
-        PagingAdapter()
+        DemoAdapter()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
